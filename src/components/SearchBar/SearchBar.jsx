@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-export default function SearchBar({ onSubmit }) {
+export default function SearchBar({ onSubmit, onSearch, onPage }) {
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -9,9 +9,11 @@ export default function SearchBar({ onSubmit }) {
 
     if (formValue === "") {
       toast.error("Please, input value for search");
+      return;
     }
-
-    onSubmit(formValue);
+    onSearch(formValue);
+    onSubmit(formValue, 1);
+    onPage(1);
     form.reset();
   }
 

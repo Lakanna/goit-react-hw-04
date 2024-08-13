@@ -1,7 +1,12 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
 
-export default function ImageGallery({ arrayOfPhotos }) {
+export default function ImageGallery({
+  arrayOfPhotos,
+  openModal,
+  dataForModal,
+}) {
+  console.log(arrayOfPhotos);
   return (
     <ul className={css.imageList}>
       {arrayOfPhotos.map(
@@ -13,6 +18,8 @@ export default function ImageGallery({ arrayOfPhotos }) {
                 altDescription={alt_description}
                 urlSmall={small}
                 urlRegular={regular}
+                onOpenModal={openModal}
+                dataForModal={dataForModal}
               />
             </li>
           );
