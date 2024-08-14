@@ -6,11 +6,16 @@ export default function ImageGallery({
   openModal,
   dataForModal,
 }) {
-  console.log(arrayOfPhotos);
   return (
     <ul className={css.imageList}>
       {arrayOfPhotos.map(
-        ({ likes, alt_description, id, urls: { regular, small } }) => {
+        ({
+          likes,
+          alt_description,
+          description,
+          id,
+          urls: { regular, small },
+        }) => {
           return (
             <li key={id}>
               <ImageCard
@@ -18,6 +23,7 @@ export default function ImageGallery({
                 altDescription={alt_description}
                 urlSmall={small}
                 urlRegular={regular}
+                description={description}
                 onOpenModal={openModal}
                 dataForModal={dataForModal}
               />

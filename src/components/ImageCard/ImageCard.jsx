@@ -4,14 +4,13 @@ export default function ImageCard({
   urlRegular,
   urlSmall,
   altDescription,
+  description,
   likes,
   onOpenModal,
   dataForModal,
 }) {
-  const openModal = (urlRegular, likes) => {
-    console.log(dataForModal);
-    console.log(urlRegular, "urlRegular in imgcard");
-    dataForModal(urlRegular, likes);
+  const openModal = (urlRegular, likes, altDescription, description) => {
+    dataForModal(urlRegular, likes, altDescription, description);
     onOpenModal();
   };
 
@@ -20,10 +19,10 @@ export default function ImageCard({
       <img
         src={urlSmall}
         alt={altDescription}
-        onClick={() => openModal(urlRegular, likes)}
+        onClick={() =>
+          openModal(urlRegular, likes, altDescription, description)
+        }
       />
-      <p>{urlRegular}</p>
-      <p>{likes}</p>
     </div>
   );
 }

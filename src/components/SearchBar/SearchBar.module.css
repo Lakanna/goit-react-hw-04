@@ -1,0 +1,23 @@
+.searchSection {
+  position: relative;
+  top: 0;
+}
+
+.searchform {
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 500px;
+}
+
+.searchform input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  outline-color: rgb(77, 148, 77);
+  margin-right: 20px;
+}

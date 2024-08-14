@@ -21,10 +21,22 @@ body {
   min-height: 100vh;
 }
 
-ul {
-  list-style: none;
+ul,
+ol {
+  list-style-type: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
 }
 
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+p {
+  margin: 0;
+}
 img {
   display: block;
   width: 100%;

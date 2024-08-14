@@ -1,0 +1,23 @@
+.btnLoadMore {
+  margin: 0 auto;
+  margin-bottom: 20px;
+
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  background-color: rgb(33, 41, 35);
+  box-shadow: 0 5px 15px 0 rgb(22, 44, 29);
+  transition: 0.5s;
+}
+
+.btnLoadMore:hover {
+  transform: translate(0, -3px);
+  box-shadow: 0 20px 40px 0 rgb(36, 36, 36);
+}
