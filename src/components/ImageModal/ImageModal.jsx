@@ -6,7 +6,6 @@ Modal.setAppElement("#root");
 export default function ImageModal({
   dataForModal,
   onCloseModal,
-
   modalIsOpen,
 }) {
   return (
@@ -14,7 +13,6 @@ export default function ImageModal({
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={onCloseModal}
-        contentLabel="Example Modal"
         dataForModal={dataForModal}
         className={css.modal}
         overlayClassName={css.overlay}

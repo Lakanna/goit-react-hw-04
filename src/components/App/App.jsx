@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 import SearchBar from "../SearchBar/SearchBar";
@@ -17,18 +17,41 @@ function App() {
   const [imgForSearch, setImgForSearch] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const searchImg = (img) => setImgForSearch(img);
-  const increasePage = (page) => setPage(page + 1);
-
-  /**
-    |============================
-    | modal
-    |============================
-  */
-
   const [modalIsOpen, setIsOpen] = useState(false);
   const [dataForModal, setDataForModal] = useState({});
+
+  useEffect(() => {
+    if (imgForSearch === "") {
+      return;
+    }
+
+    const fetchSearchigValue = async (imgForSearch, page) => {
+      try {
+        setLoading(true);
+        setError(false);
+
+        const respons = await getPhotos(imgForSearch, page);
+        if (respons.data.total_pages === 0) {
+          toast.error(
+            "There is not photos matched your search. Try input another one, please"
+          );
+        }
+
+        console.log(respons.data.total_pages, "respons.data.total_pages fetch");
+        setTotalPages(respons.data.total_pages);
+        setPhotos((prev) => [...prev, ...respons.data.results]);
+      } catch (error) {
+        toast.error("Something is wrong... Try reload this page, please");
+        console.log(error, "in catch");
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSearchigValue(imgForSearch, page);
+  }, [imgForSearch, page]);
+
+  const searchImg = (img) => setImgForSearch(img);
 
   const dataModal = (src, likes, altDescription, description) =>
     setDataForModal({ src, likes, altDescription, description });
@@ -40,48 +63,19 @@ function App() {
     setIsOpen(false);
   }
 
-  /**
-    |============================
-    | 
-    |============================
-  */
+  const handleSubmit = async (imgForSearch) => {
+    searchImg(imgForSearch);
+    setPhotos([]);
+  };
 
-  const fetchSearchigValue = async (value, page) => {
-    try {
-      if (page === 1) {
-        setPhotos([]);
-      }
-      setLoading(true);
-      setError(false);
-
-      const respons = await getPhotos(value, page);
-      if (respons.data.total_pages === 0) {
-        toast.error(
-          "There is not photos matched your search. Try input another one, please"
-        );
-      }
-
-      setTotalPages(respons.data.total_pages);
-      setPhotos((prev) => {
-        return prev.concat(respons.data.results);
-      });
-    } catch (error) {
-      toast.error("Something is wrong... Try reload this page, please");
-      console.log(error, "in catch");
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const loadMore = async () => {
+    setPage(page + 1);
   };
 
   return (
     <>
       <h1>Search photos</h1>
-      <SearchBar
-        onSubmit={fetchSearchigValue}
-        onSearch={searchImg}
-        onPage={increasePage}
-      />
+      <SearchBar onSubmit={handleSubmit} />
       {error && <ErrorMessage />}
       {photos.length > 0 && (
         <ImageGallery
@@ -90,21 +84,13 @@ function App() {
           dataForModal={dataModal}
         />
       )}
-      {totalPages > page && (
-        <LoadMoreBtn
-          getPhotos={fetchSearchigValue}
-          page={page}
-          value={imgForSearch}
-          changePage={increasePage}
-        />
-      )}
+      {page < totalPages && <LoadMoreBtn changePage={loadMore} />}
       {loading && <Loader />}
       <Toaster />
       {modalIsOpen && (
         <ImageModal
           dataForModal={dataForModal}
           onCloseModal={closeModal}
-          openModal={openModal}
           modalIsOpen={modalIsOpen}
         />
       )}

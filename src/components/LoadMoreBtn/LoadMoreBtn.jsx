@@ -1,18 +1,8 @@
 import css from "./LoadMoreBtn.module.css";
 
-export default function LoadMoreBtn({ page, getPhotos, value, changePage }) {
-  const pageForChange = page;
-  const valueForSearch = value;
-  const clickBtn = (page, value) => {
-    changePage(page);
-    getPhotos(value, page);
-  };
-
+export default function LoadMoreBtn({ changePage }) {
   return (
-    <button
-      className={css.btnLoadMore}
-      onClick={() => clickBtn(pageForChange, valueForSearch)}
-    >
+    <button className={css.btnLoadMore} onClick={changePage}>
       Load more
     </button>
   );
